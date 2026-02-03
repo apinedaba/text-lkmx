@@ -1,15 +1,18 @@
 import { prisma } from "@/lib/db";
-import { Area } from "@/generated/prisma/client";
+
+const AREAS = ["OPERATIONS", "SALES", "HR"] as const;
+type Area = (typeof AREAS)[number];
 
 export async function getAnalytics() {
     const totalUsers = await prisma.user.count();
+
     const usersInside = await prisma.user.count({
         where: {
             OR: [
                 { lastCheckOut: null },
                 {
                     lastCheckIn: {
-                        gt: prisma.user.fields.lastCheckOut,
+                        gt: prisma.user?.fields?.lastCheckOut,
                     },
                 },
             ],
@@ -21,13 +24,14 @@ export async function getAnalytics() {
         _count: { area: true },
     });
 
-    const usersByArea = Object.values(Area).reduce((acc, area) => {
-        acc[area] = 0;
-        return acc;
-    }, {} as Record<string, number>);
+    const usersByArea: Record<Area, number> = {
+        OPERATIONS: 0,
+        SALES: 0,
+        HR: 0,
+    };
 
     byArea.forEach((item) => {
-        usersByArea[item.area] = item._count.area;
+        usersByArea[item.area as Area] = item._count.area;
     });
 
     return {
