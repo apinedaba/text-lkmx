@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LKMX – Prueba Técnica Software Engineer
 
-## Getting Started
+Este proyecto es una aplicación construida con **Next.js**, **TypeScript**, **Prisma**, **PostgreSQL**, **Docker**, **Tailwind CSS** y **shadcn/ui**.  por Adrian Pineda.
+El objetivo es demostrar una implementación funcional con **lógica de negocio básica**, **API**, **base de datos** y **UI**.
 
-First, run the development server:
+---
+
+## 🚀 Tecnologías
+
+- Next.js (App Router)
+- TypeScript
+- Prisma ORM
+- PostgreSQL
+- Docker / Docker Compose
+- Tailwind CSS
+- shadcn/ui
+
+---
+
+## 📦 Funcionalidad
+
+### API
+- `GET /api/health` – Health check
+- `GET /api/user` – Listar usuarios
+- `POST /api/user` – Crear usuario
+- `PUT /api/user` – Editar usuario
+- `POST /api/user/check-in` – Entrada de usuario
+- `POST /api/user/check-out` – Salida de usuario
+- `GET /api/analytics` – Analíticas
+
+### Lógica de negocio
+- Los usuarios pertenecen a un área: **OPERATIONS**, **SALES**, **HR**
+- El check-in / check-out define si un usuario está “dentro”
+- El endpoint de analytics devuelve:
+  - Total de usuarios
+  - Usuarios dentro
+  - Usuarios por área
+
+### UI
+- Dashboard con:
+  - Cards de analíticas
+  - Usuarios agrupados por área
+  - Cards de usuario con iniciales
+- Modal para crear y editar usuarios
+- Acciones de check-in / check-out desde la UI
+
+---
+
+## 🐳 Ejecutar el proyecto
+
+### 1️⃣ Levantar contenedores
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+docker compose up --build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+La aplicación estará disponible en:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+### 2️⃣ Ejecutar migraciones (una sola vez)
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npx prisma migrate deploy
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📊 Dashboard
 
-## Deploy on Vercel
+```
+http://localhost:3000/dashboard
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Desde aquí se pueden:
+- Ver analíticas
+- Crear y editar usuarios
+- Hacer check-in y check-out
+- Ver usuarios por área
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## ☁️ Deploy
+
+La aplicación puede desplegarse en **Google Cloud Run** usando la imagen Docker.  
+La base de datos puede alojarse en **Cloud SQL** u otro proveedor PostgreSQL.
+
+---
+
+## ✅ Notas
+
+- Prisma y dependencias se generan dentro del contenedor.
+- Tailwind CSS v3 se usa por estabilidad.
+- La arquitectura prioriza claridad y mantenibilidad.
+
+---
+
+## 🏁 Conclusión
+
+El proyecto muestra una aplicación funcional con API, base de datos, lógica de negocio simple y una UI básica, manteniendo una estructura clara y fácil de escalar.
